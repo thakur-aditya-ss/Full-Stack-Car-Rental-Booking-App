@@ -50,7 +50,7 @@ const ManageBookings = () => {
               <th className="p-3 font-medium">Car</th>
               <th className="p-3 font-medium max-md:hidden">Date Range</th>
               <th className="p-3 font-medium">Total</th>
-              <th className="p-3 font-medium max-md:hidden">Payment</th>
+              {/* <th className="p-3 font-medium max-md:hidden">Payment</th> */}
               <th className="p-3 font-medium">Actions</th>
             </tr>
           </thead>
@@ -69,9 +69,9 @@ const ManageBookings = () => {
 
                 <td className='p-3'>{currency}{booking.price}</td>
 
-                <td className='p-3 max-md:hidden'>
+                {/* <td className='p-3 max-md:hidden'>
                   <span className='bg-gray-100 px-3 py-1 rounded-full text-xs'>offline</span>
-                </td>
+                </td> */}
 
                 <td className='p-3'>
                   {booking.status === 'pending' ? (

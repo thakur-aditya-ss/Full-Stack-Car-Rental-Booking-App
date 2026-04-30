@@ -8,17 +8,19 @@ const Banner = () => {
     initial={{ opacity: 0, y: 50 }}
     whileInView={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.6 }}
-    className='flex flex-col md:flex-row md:items-start items-center justify-between px-8 min-md:pl-14 pt-10 bg-gradient-to-r from-[#0558FE] to-[#A9CFFF] max-w-6xl mx-3 md:mx-auto rounded-2xl overflow-hidden'>
+    className='flex flex-col md:flex-row md:items-start items-center justify-between px-8 min-md:pl-14 pt-10 bg-gradient-to-r from-primary to-secondary/80 max-w-6xl mx-3 md:mx-auto rounded-2xl overflow-hidden shadow-2xl relative'>
+        <div className='absolute inset-0 bg-white/5 backdrop-blur-sm pointer-events-none'></div>
 
-        <div className='text-white'>
-            <h2 className='text-3xl font-medium'>Do You Own a Luxury Car?</h2>
-            <p className='mt-2'>Monetize your vehicle effortlessly by listing it on CarRental.</p>
-            <p className='max-w-130'>We take care of insurance, driver verification and secure payments — so you can earn passive income, stress-free.</p>
+        <div className='text-white relative z-10'>
+            <h2 className='text-4xl font-bold tracking-tight'>Do You Own a Luxury Car?</h2>
+            <p className='mt-3 text-white/90 text-lg'>Monetize your vehicle effortlessly by listing it on CarRental.</p>
+            {/* <p className='max-w-130'>We take care of insurance, driver verification and secure payments — so you can earn passive income, stress-free.</p> */}
+            <p className='max-w-130 text-white/80 mt-1 leading-relaxed'>We take care of insurance and driver verification — so you can earn passive income, stress-free.</p>
 
             <motion.button 
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.2)" }}
             whileTap={{ scale: 0.95 }}
-            className='px-6 py-2 bg-white hover:bg-slate-100 transition-all text-primary rounded-lg text-sm mt-4 cursor-pointer'>List your car</motion.button>
+            className='px-8 py-3 bg-white hover:bg-slate-50 transition-all text-primary font-semibold rounded-xl text-sm mt-6 cursor-pointer shadow-lg'>List your car</motion.button>
         </div>
 
         <motion.img 
