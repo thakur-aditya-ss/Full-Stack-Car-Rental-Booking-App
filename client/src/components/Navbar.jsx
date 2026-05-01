@@ -54,6 +54,10 @@ const Navbar = () => {
 
                 <button onClick={()=> isOwner ? navigate('/owner') : changeRole()} className="cursor-pointer hover:text-primary transition-colors font-semibold">{isOwner ? 'Dashboard' : 'List cars'}</button>
 
+                {user && !isOwner && (
+                    <button onClick={()=> navigate('/profile')} className="cursor-pointer hover:text-primary transition-colors font-semibold">Profile</button>
+                )}
+
                 <button onClick={()=> {user ? logout() : setShowLogin(true)}} className="cursor-pointer px-8 py-2.5 bg-primary hover:bg-primary-dull transition-all text-white font-semibold rounded-xl shadow-md hover:shadow-lg">{user ? 'Logout' : 'Login'}</button>
             </div>
         </div>

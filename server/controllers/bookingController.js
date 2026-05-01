@@ -115,3 +115,29 @@ export const changeBookingStatus = async (req, res)=>{
         res.json({success: false, message: error.message})
     }
 }
+
+// API to mark booking as paid (Simulated Payment)
+export const markAsPaid = async (req, res)=>{
+    try {
+        const {_id} = req.user;
+        const {bookingId} = req.body;
+
+        const booking = await Booking.findById(bookingId);
+
+        if(booking.user.toString() !== _id.toString()){
+            return res.json({ success: false, message: "Unauthorized"});
+        }
+
+        if(booking.status !== 'confirmed') {
+            return res.json({ success: false, message: "Only confirmed bookings can be paid"});
+        }
+
+        booking.isPaid = true;
+        await booking.save();
+
+        res.json({ success: true, message: "Payment Successful"});
+    } catch (error) {
+        console.log(error.message);
+        res.json({success: false, message: error.message});
+    }
+}

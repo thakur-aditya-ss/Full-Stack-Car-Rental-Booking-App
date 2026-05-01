@@ -7,6 +7,8 @@ const userSchema = new mongoose.Schema({
     role: {type: String, enum: ["owner", "user"], default: 'user' },
     image: {type: String, default: ''},
     dob: {type: String, default: ''},
+    age: {type: Number, default: null},
+    mobileNumber: {type: String, default: ''},
     aadharNumber: {type: String, default: ''},
     panNumber: {type: String, default: ''},
     licenceNumber: {type: String, default: ''},

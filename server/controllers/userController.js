@@ -72,10 +72,27 @@ export const getUserData = async (req, res) =>{
 // Get All Cars for the Frontend
 export const getCars = async (req, res) =>{
     try {
-        const cars = await Car.find({isAvaliable: true})
+        const cars = await Car.find({isAvaliable: true}).populate('owner', 'name email')
         res.json({success: true, cars})
     } catch (error) {
         console.log(error.message);
         res.json({success: false, message: error.message})
+    }
+}
+
+// API to update normal user profile details
+export const updateUserProfile = async (req, res) => {
+    try {
+        const { _id } = req.user;
+        const { name, dob, age, mobileNumber, aadharNumber, panNumber, licenceNumber, address } = req.body;
+
+        await User.findByIdAndUpdate(_id, {
+            name, dob, age, mobileNumber, aadharNumber, panNumber, licenceNumber, address
+        });
+
+        res.json({ success: true, message: "Profile Updated" });
+    } catch (error) {
+        console.log(error.message);
+        res.json({ success: false, message: error.message });
     }
 }

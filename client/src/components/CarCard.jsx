@@ -26,6 +26,9 @@ const CarCard = ({car}) => {
             <div>
                 <h3 className='text-lg font-medium'>{car.brand} {car.model}</h3>
                 <p className='text-muted-foreground text-sm'>{car.category} • {car.year}</p>
+                {car.owner && (
+                    <p className='text-primary text-xs mt-1 font-medium'>Listed by: {car.owner.name}</p>
+                )}
             </div>
         </div>
 

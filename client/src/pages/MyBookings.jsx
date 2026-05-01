@@ -24,6 +24,20 @@ const MyBookings = () => {
     }
   }
 
+  const handlePayment = async (bookingId) => {
+    try {
+      const { data } = await axios.post('/api/bookings/mark-paid', { bookingId })
+      if (data.success) {
+        toast.success(data.message)
+        fetchMyBookings()
+      } else {
+        toast.error(data.message)
+      }
+    } catch (error) {
+      toast.error(error.message)
+    }
+  }
+
   useEffect(()=>{
     user && fetchMyBookings()
   },[user])
@@ -85,10 +99,19 @@ const MyBookings = () => {
 
            {/* Price */}
            <div className='md:col-span-1 flex flex-col justify-between gap-6'>
-              <div className='text-sm text-gray-500 text-right'>
+              <div className='text-sm text-gray-500 text-right flex flex-col items-end'>
                 <p>Total Price</p>
-                <h1 className='text-2xl font-semibold text-primary'>{currency}{booking.price}</h1>
+                <div className='flex items-center gap-2'>
+                  <h1 className='text-2xl font-semibold text-primary'>{currency}{booking.price}</h1>
+                  {booking.isPaid && <span className='bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded font-medium'>Paid</span>}
+                </div>
                 <p>Booked on {booking.createdAt.split('T')[0]}</p>
+                
+                {booking.status === 'confirmed' && !booking.isPaid && (
+                   <button onClick={() => handlePayment(booking._id)} className='mt-4 px-6 py-2 bg-green-500 hover:bg-green-600 text-white font-medium rounded transition-all cursor-pointer shadow-sm'>
+                     Pay Now
+                   </button>
+                )}
               </div>
            </div>
 

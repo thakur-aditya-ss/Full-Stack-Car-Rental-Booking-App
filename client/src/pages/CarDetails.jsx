@@ -10,7 +10,7 @@ const CarDetails = () => {
 
   const {id} = useParams()
 
-  const {cars, axios, pickupDate, setPickupDate, returnDate, setReturnDate} = useAppContext()
+  const {cars, axios, pickupDate, setPickupDate, returnDate, setReturnDate, user} = useAppContext()
 
   const navigate = useNavigate()
   const [car, setCar] = useState(null)
@@ -19,6 +19,14 @@ const CarDetails = () => {
   const handleSubmit = async (e)=>{
     e.preventDefault();
     try {
+      const isProfileComplete = user?.dob && user?.age && user?.mobileNumber && user?.aadharNumber && user?.panNumber && user?.licenceNumber && user?.address;
+
+      if (!isProfileComplete) {
+        toast.error("Please complete your profile details before booking.")
+        navigate('/profile')
+        return;
+      }
+
       const {data} = await axios.post('/api/bookings/create', {
         car: id,
         pickupDate, 
@@ -70,6 +78,11 @@ const CarDetails = () => {
                 <div>
                   <h1 className='text-3xl font-bold'>{car.brand} {car.model}</h1>
                   <p className='text-gray-500 text-lg'>{car.category} • {car.year}</p>
+                  {car.owner && (
+                      <p className='text-primary mt-2 text-sm font-medium'>
+                          Listed by: {car.owner.name}
+                      </p>
+                  )}
                 </div>
                 <hr className='border-borderColor my-6'/>
 
