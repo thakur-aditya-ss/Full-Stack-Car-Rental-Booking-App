@@ -6,6 +6,11 @@ const userSchema = new mongoose.Schema({
     password: {type: String, required: true },
     role: {type: String, enum: ["owner", "user"], default: 'user' },
     image: {type: String, default: ''},
+    dob: {type: String, default: ''},
+    aadharNumber: {type: String, default: ''},
+    panNumber: {type: String, default: ''},
+    licenceNumber: {type: String, default: ''},
+    address: {type: String, default: ''},
 },{timestamps: true})
 
 const User = mongoose.model('User', userSchema)

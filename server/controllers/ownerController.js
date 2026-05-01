@@ -23,19 +23,23 @@ export const addCar = async (req, res)=>{
     try {
         const {_id} = req.user;
         let car = JSON.parse(req.body.carData);
-        const imageFile = req.file;
+        
+        if (!req.files || !req.files.image || !req.files.rcDocument) {
+            return res.json({success: false, message: "Car Image and RC Document are required"})
+        }
 
-        // Upload Image to ImageKit
-        const fileBuffer = fs.readFileSync(imageFile.path)
-        const response = await imagekit.upload({
-            file: fileBuffer,
+        const imageFile = req.files.image[0];
+        const rcFile = req.files.rcDocument[0];
+
+        // Upload Car Image to ImageKit
+        const imageFileBuffer = fs.readFileSync(imageFile.path)
+        const imageResponse = await imagekit.upload({
+            file: imageFileBuffer,
             fileName: imageFile.originalname,
             folder: '/cars'
         })
-
-        // optimization through imagekit URL transformation
-        var optimizedImageUrl = imagekit.url({
-            path : response.filePath,
+        const optimizedImageUrl = imagekit.url({
+            path : imageResponse.filePath,
             transformation : [
                 {width: '1280'}, // Width resizing
                 {quality: 'auto'}, // Auto compression
@@ -43,8 +47,26 @@ export const addCar = async (req, res)=>{
             ]
         });
 
+        // Upload RC Document to ImageKit
+        const rcFileBuffer = fs.readFileSync(rcFile.path)
+        const rcResponse = await imagekit.upload({
+            file: rcFileBuffer,
+            fileName: rcFile.originalname,
+            folder: '/documents'
+        })
+        const optimizedRcUrl = imagekit.url({
+            path : rcResponse.filePath,
+            transformation : [
+                {width: '1280'},
+                {quality: 'auto'},
+                { format: 'webp' }
+            ]
+        });
+
         const image = optimizedImageUrl;
-        await Car.create({...car, owner: _id, image})
+        const rcDocument = optimizedRcUrl;
+        
+        await Car.create({...car, owner: _id, image, rcDocument})
 
         res.json({success: true, message: "Car Added"})
 
@@ -183,3 +205,20 @@ export const updateUserImage = async (req, res)=>{
         res.json({success: false, message: error.message})
     }
 }   
+
+// API to update owner profile details
+export const updateOwnerProfile = async (req, res) => {
+    try {
+        const { _id } = req.user;
+        const { name, dob, aadharNumber, panNumber, licenceNumber, address } = req.body;
+
+        await User.findByIdAndUpdate(_id, {
+            name, dob, aadharNumber, panNumber, licenceNumber, address
+        });
+
+        res.json({ success: true, message: "Profile Updated" });
+    } catch (error) {
+        console.log(error.message);
+        res.json({ success: false, message: error.message });
+    }
+}

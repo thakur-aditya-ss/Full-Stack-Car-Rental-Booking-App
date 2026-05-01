@@ -6,9 +6,10 @@ import toast from 'react-hot-toast'
 
 const AddCar = () => {
 
-  const {axios, currency} = useAppContext()
+  const {axios, currency, user} = useAppContext()
 
   const [image, setImage] = useState(null)
+  const [rcDocument, setRcDocument] = useState(null)
   const [car, setCar] = useState({
     brand: '',
     model: '',
@@ -31,6 +32,7 @@ const AddCar = () => {
     try {
       const formData = new FormData()
       formData.append('image', image)
+      formData.append('rcDocument', rcDocument)
       formData.append('carData', JSON.stringify(car))
 
       const {data} = await axios.post('/api/owner/add-car', formData)
@@ -38,6 +40,7 @@ const AddCar = () => {
       if(data.success){
         toast.success(data.message)
         setImage(null)
+        setRcDocument(null)
         setCar({
           brand: '',
           model: '',
@@ -49,6 +52,7 @@ const AddCar = () => {
           seating_capacity: 0,
           location: '',
           description: '',
+          numberPlate: '',
         })
       }else{
         toast.error(data.message)
@@ -58,6 +62,19 @@ const AddCar = () => {
     }finally{
       setIsLoading(false)
     }
+  }
+
+  const isProfileComplete = user?.dob && user?.aadharNumber && user?.panNumber && user?.licenceNumber && user?.address;
+
+  if (!isProfileComplete) {
+    return (
+      <div className='px-4 py-10 md:px-10 flex-1 flex flex-col items-center justify-center text-center'>
+         <img src={assets.cautionIconColored} alt="caution" className="h-16 mb-4 opacity-70"/>
+         <h2 className="text-2xl font-semibold text-gray-800 mb-2">Profile Incomplete</h2>
+         <p className="text-gray-500 max-w-md mb-6">You must complete your profile details (Aadhar, PAN, Licence, etc.) before you can list a car.</p>
+         <button onClick={() => window.location.href='/owner/profile'} className="px-6 py-2.5 bg-primary text-white rounded-lg font-medium hover:bg-blue-800 transition-all cursor-pointer shadow-md">Go to Profile</button>
+      </div>
+    )
   }
 
   return (
@@ -107,6 +124,24 @@ const AddCar = () => {
               <option value="SUV">SUV</option>
               <option value="Van">Van</option>
             </select>
+          </div>
+        </div>
+
+        {/* Car Registration Details */}
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+          <div className='flex flex-col w-full'>
+            <label>Number Plate</label>
+            <input type="text" placeholder="e.g. MH 01 AB 1234" required className='px-3 py-2 mt-1 border border-borderColor rounded-md outline-none uppercase' value={car.numberPlate || ''} onChange={e=> setCar({...car, numberPlate: e.target.value})}/>
+          </div>
+          <div className='flex flex-col w-full'>
+             <label>RC Document</label>
+             <div className='flex items-center gap-2 w-full mt-1'>
+               <label htmlFor="rc-document">
+                 <img src={rcDocument ? URL.createObjectURL(rcDocument) : assets.upload_icon} alt="upload rc" className='h-10 rounded cursor-pointer border border-dashed border-gray-300 p-1'/>
+                 <input type="file" id="rc-document" accept="image/*" hidden required onChange={e=> setRcDocument(e.target.files[0])}/>
+               </label>
+               <p className='text-xs text-gray-500'>Upload RC Image</p>
+             </div>
           </div>
         </div>
 

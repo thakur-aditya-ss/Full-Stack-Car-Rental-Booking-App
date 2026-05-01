@@ -4,9 +4,10 @@ import toast from 'react-hot-toast';
 
 const Login = () => {
 
-    const {setShowLogin, axios, setToken, navigate} = useAppContext()
+    const {setShowLogin, axios, setToken, navigate, setUser, setIsOwner} = useAppContext()
 
     const [state, setState] = React.useState("login");
+    const [role, setRole] = React.useState("user");
     const [name, setName] = React.useState("");
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -14,10 +15,19 @@ const Login = () => {
     const onSubmitHandler = async (event)=>{
         try {
             event.preventDefault();
-            const {data} = await axios.post(`/api/user/${state}`, {name, email, password})
+            const {data} = await axios.post(`/api/user/${state}`, {name, email, password, role})
 
             if (data.success) {
-                navigate('/')
+                if (data.user) {
+                    setUser(data.user)
+                    setIsOwner(data.user.role === 'owner')
+                }
+
+                if (data.user && data.user.role === 'owner') {
+                    navigate('/owner')
+                } else {
+                    navigate('/')
+                }
                 setToken(data.token)
                 localStorage.setItem('token', data.token)
                 setShowLogin(false)
@@ -35,8 +45,18 @@ const Login = () => {
     <div onClick={()=> setShowLogin(false)} className='fixed top-0 bottom-0 left-0 right-0 z-100 flex items-center text-sm text-gray-600 bg-black/50'>
 
       <form onSubmit={onSubmitHandler} onClick={(e)=>e.stopPropagation()} className="flex flex-col gap-4 m-auto items-start p-8 py-12 w-80 sm:w-[352px] rounded-lg shadow-xl border border-gray-200 bg-white">
-            <p className="text-2xl font-medium m-auto">
-                <span className="text-primary">User</span> {state === "login" ? "Login" : "Sign Up"}
+            
+            <div className='flex w-full justify-between border border-gray-200 rounded-md overflow-hidden mb-2'>
+                <div onClick={() => setRole("user")} className={`flex-1 text-center py-2 cursor-pointer transition-all ${role === "user" ? "bg-primary text-white font-medium" : "bg-gray-100 text-gray-600"}`}>
+                    User
+                </div>
+                <div onClick={() => setRole("owner")} className={`flex-1 text-center py-2 cursor-pointer transition-all ${role === "owner" ? "bg-primary text-white font-medium" : "bg-gray-100 text-gray-600"}`}>
+                    Admin
+                </div>
+            </div>
+
+            <p className="text-2xl font-medium m-auto mb-2">
+                <span className="text-primary">{role === "user" ? "User" : "Admin"}</span> {state === "login" ? "Login" : "Sign Up"}
             </p>
             {state === "register" && (
                 <div className="w-full">

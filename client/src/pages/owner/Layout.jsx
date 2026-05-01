@@ -5,17 +5,25 @@ import { Outlet } from 'react-router-dom'
 import { useAppContext } from '../../context/AppContext'
 
 const Layout = () => {
-  const {isOwner, navigate} = useAppContext()
+  const {isOwner, user, navigate, token} = useAppContext()
 
   useEffect(()=>{
-    if(!isOwner){
-      navigate('/')
+    const storedToken = localStorage.getItem('token')
+    if (!storedToken) {
+        navigate('/')
+    } else if (user !== null && !isOwner) {
+        navigate('/')
     }
-  },[isOwner])
+  },[isOwner, user, navigate])
+
+  if (!token || !user || !isOwner) {
+      return null; // or a loading spinner
+  }
+
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col min-h-screen'>
       <NavbarOwner />
-      <div className='flex'>
+      <div className='flex flex-1'>
         <Sidebar />
         <Outlet />
       </div>
