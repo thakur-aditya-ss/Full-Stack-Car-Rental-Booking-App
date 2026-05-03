@@ -96,3 +96,28 @@ export const updateUserProfile = async (req, res) => {
         res.json({ success: false, message: error.message });
     }
 }
+
+// Reset Password (Simplified without email verification for now)
+export const resetPassword = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        
+        if (!email || !password) {
+            return res.json({ success: false, message: 'Please provide email and new password' });
+        }
+        
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.json({ success: false, message: 'User not found' });
+        }
+        
+        const hashedPassword = await bcrypt.hash(password, 10);
+        user.password = hashedPassword;
+        await user.save();
+        
+        res.json({ success: true, message: 'Password reset successful. You can now login.' });
+    } catch (error) {
+        console.log(error.message);
+        res.json({ success: false, message: error.message });
+    }
+}

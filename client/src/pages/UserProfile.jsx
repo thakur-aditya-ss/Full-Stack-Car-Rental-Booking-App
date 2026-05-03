@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useAppContext } from '../context/AppContext'
 import toast from 'react-hot-toast'
 import Title from '../components/Title'
+import { assets } from '../assets/assets'
 
 const UserProfile = () => {
   const { user, fetchUser, axios } = useAppContext()
@@ -17,6 +18,9 @@ const UserProfile = () => {
     licenceNumber: '',
     address: ''
   })
+  
+  const [image, setImage] = useState(null)
+  const [isUploading, setIsUploading] = useState(false)
 
   useEffect(() => {
     if (user) {
@@ -53,11 +57,53 @@ const UserProfile = () => {
     }
   }
 
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+
+    setImage(file)
+    setIsUploading(true)
+
+    const formData = new FormData()
+    formData.append('image', file)
+
+    try {
+      const { data } = await axios.post('/api/user/update-image', formData)
+      if (data.success) {
+        toast.success(data.message)
+        fetchUser()
+      } else {
+        toast.error(data.message)
+      }
+    } catch (error) {
+      toast.error(error.message)
+    } finally {
+      setIsUploading(false)
+    }
+  }
+
   return (
     <div className="px-6 md:px-16 lg:px-24 xl:px-32 2xl:px-48 mt-16 max-w-7xl w-full">
       <Title title="User Profile" subTitle="Manage your personal details and billing information" align="left" />
       
       <div className="max-w-4xl border border-gray-200 rounded-xl shadow-sm bg-white p-8 mt-8">
+        
+        {/* Profile Image Section */}
+        <div className="flex flex-col sm:flex-row items-center gap-6 mb-8 pb-8 border-b border-gray-100">
+           <div className='relative'>
+             <img src={image ? URL.createObjectURL(image) : user?.image || assets.user_profile} alt="Profile" className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover border-4 border-gray-50 shadow-md" />
+             <label htmlFor="profile-image" className="absolute bottom-0 right-0 bg-primary p-2 rounded-full cursor-pointer shadow-lg hover:scale-105 transition-transform">
+               <img src={assets.upload_icon} alt="Upload" className="w-4 h-4 sm:w-5 sm:h-5 invert" />
+             </label>
+             <input type="file" id="profile-image" accept="image/*" onChange={handleImageUpload} className="hidden" />
+           </div>
+           <div>
+             <h3 className="text-2xl font-bold text-gray-800">{user?.name || 'User Name'}</h3>
+             <p className="text-gray-500">{user?.email}</p>
+             {isUploading && <p className='text-sm text-primary mt-2 animate-pulse'>Uploading image...</p>}
+           </div>
+        </div>
+
         <div className="flex justify-between items-center mb-8 pb-4 border-b border-gray-100">
             <h2 className="text-xl font-semibold text-gray-800">Personal Information</h2>
             {!isEditing && (

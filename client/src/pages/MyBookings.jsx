@@ -4,12 +4,14 @@ import Title from '../components/Title'
 import { useAppContext } from '../context/AppContext'
 import toast from 'react-hot-toast'
 import { motion } from 'motion/react'
+import PaymentModal from '../components/PaymentModal'
 
 const MyBookings = () => {
 
   const { axios, user, currency } = useAppContext()
 
   const [bookings, setBookings] = useState([])
+  const [selectedBookingForPayment, setSelectedBookingForPayment] = useState(null)
 
   const fetchMyBookings = async ()=>{
     try {
@@ -24,11 +26,12 @@ const MyBookings = () => {
     }
   }
 
-  const handlePayment = async (bookingId) => {
+  const handlePaymentSuccess = async (bookingId) => {
     try {
       const { data } = await axios.post('/api/bookings/mark-paid', { bookingId })
       if (data.success) {
         toast.success(data.message)
+        setSelectedBookingForPayment(null)
         fetchMyBookings()
       } else {
         toast.error(data.message)
@@ -103,12 +106,12 @@ const MyBookings = () => {
                 <p>Total Price</p>
                 <div className='flex items-center gap-2'>
                   <h1 className='text-2xl font-semibold text-primary'>{currency}{booking.price}</h1>
-                  {booking.isPaid && <span className='bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded font-medium'>Paid</span>}
+                  {booking.isPaid && <span className='bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded font-medium'>Payment Completed</span>}
                 </div>
                 <p>Booked on {booking.createdAt.split('T')[0]}</p>
                 
                 {booking.status === 'confirmed' && !booking.isPaid && (
-                   <button onClick={() => handlePayment(booking._id)} className='mt-4 px-6 py-2 bg-green-500 hover:bg-green-600 text-white font-medium rounded transition-all cursor-pointer shadow-sm'>
+                   <button onClick={() => setSelectedBookingForPayment(booking)} className='mt-4 px-6 py-2 bg-green-500 hover:bg-green-600 text-white font-medium rounded transition-all cursor-pointer shadow-sm'>
                      Pay Now
                    </button>
                 )}
@@ -119,6 +122,14 @@ const MyBookings = () => {
           </motion.div>
         ))}
        </div>
+       
+       {selectedBookingForPayment && (
+         <PaymentModal 
+           booking={selectedBookingForPayment}
+           onClose={() => setSelectedBookingForPayment(null)}
+           onSuccess={handlePaymentSuccess}
+         />
+       )}
       
     </motion.div>
   )

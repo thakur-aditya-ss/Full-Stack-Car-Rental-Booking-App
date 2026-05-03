@@ -7,7 +7,10 @@ export const protect = async (req, res, next)=>{
         return res.json({success: false, message: "not authorized"})
     }
     try {
-        const userId = jwt.decode(token, process.env.JWT_SECRET)
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
+        // If the token was signed with just the userId string, decoded will be that string.
+        // If it was signed with an object { id: userId }, decoded.id would be the userId.
+        const userId = typeof decoded === 'string' ? decoded : decoded.id;
 
         if(!userId){
             return res.json({success: false, message: "not authorized"})
