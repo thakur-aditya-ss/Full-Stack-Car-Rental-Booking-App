@@ -16,7 +16,8 @@ const UserProfile = () => {
     aadharNumber: '',
     panNumber: '',
     licenceNumber: '',
-    address: ''
+    address: '',
+    gender: ''
   })
   
   const [image, setImage] = useState(null)
@@ -32,7 +33,8 @@ const UserProfile = () => {
         aadharNumber: user.aadharNumber || '',
         panNumber: user.panNumber || '',
         licenceNumber: user.licenceNumber || '',
-        address: user.address || ''
+        address: user.address || '',
+        gender: user.gender || ''
       })
     }
   }, [user])
@@ -135,16 +137,30 @@ const UserProfile = () => {
             <div className="flex flex-col">
               <label className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-2">Date of Birth</label>
               {isEditing ? (
-                  <input type="date" name="dob" value={formData.dob} onChange={handleChange} className="border border-gray-300 rounded-lg p-2.5 outline-primary text-gray-700 bg-white focus:ring-2 focus:ring-primary/20 transition-all" />
+                  <input type="date" name="dob" value={formData.dob} onChange={handleChange} required className="border border-gray-300 rounded-lg p-2.5 outline-primary text-gray-700 bg-white focus:ring-2 focus:ring-primary/20 transition-all" />
               ) : (
                   <p className="text-gray-800 font-medium py-2.5">{formData.dob || '-'}</p>
               )}
             </div>
 
             <div className="flex flex-col">
+              <label className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-2">Gender</label>
+              {isEditing ? (
+                  <select name="gender" value={formData.gender} onChange={handleChange} required className="border border-gray-300 rounded-lg p-2.5 outline-primary text-gray-700 bg-white focus:ring-2 focus:ring-primary/20 transition-all">
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+              ) : (
+                  <p className="text-gray-800 font-medium py-2.5">{formData.gender || '-'}</p>
+              )}
+            </div>
+
+            <div className="flex flex-col">
               <label className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-2">Age</label>
               {isEditing ? (
-                  <input type="number" name="age" value={formData.age} onChange={handleChange} placeholder="e.g. 25" className="border border-gray-300 rounded-lg p-2.5 outline-primary text-gray-700 bg-white focus:ring-2 focus:ring-primary/20 transition-all" />
+                  <input type="number" name="age" value={formData.age} onChange={handleChange} required placeholder="e.g. 25" className="border border-gray-300 rounded-lg p-2.5 outline-primary text-gray-700 bg-white focus:ring-2 focus:ring-primary/20 transition-all" />
               ) : (
                   <p className="text-gray-800 font-medium py-2.5">{formData.age || '-'}</p>
               )}
@@ -153,7 +169,7 @@ const UserProfile = () => {
             <div className="flex flex-col">
               <label className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-2">Mobile Number</label>
               {isEditing ? (
-                  <input type="tel" name="mobileNumber" value={formData.mobileNumber} onChange={handleChange} placeholder="e.g. +91 9876543210" className="border border-gray-300 rounded-lg p-2.5 outline-primary text-gray-700 bg-white focus:ring-2 focus:ring-primary/20 transition-all" />
+                  <input type="tel" name="mobileNumber" value={formData.mobileNumber} onChange={handleChange} required placeholder="e.g. +91 9876543210" className="border border-gray-300 rounded-lg p-2.5 outline-primary text-gray-700 bg-white focus:ring-2 focus:ring-primary/20 transition-all" />
               ) : (
                   <p className="text-gray-800 font-medium py-2.5">{formData.mobileNumber || '-'}</p>
               )}
@@ -162,7 +178,7 @@ const UserProfile = () => {
             <div className="flex flex-col">
               <label className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-2">Aadhar Number</label>
               {isEditing ? (
-                  <input type="text" name="aadharNumber" value={formData.aadharNumber} onChange={handleChange} placeholder="0000 0000 0000" className="border border-gray-300 rounded-lg p-2.5 outline-primary text-gray-700 bg-white focus:ring-2 focus:ring-primary/20 transition-all" />
+                  <input type="text" name="aadharNumber" value={formData.aadharNumber} onChange={handleChange} required placeholder="0000 0000 0000" className="border border-gray-300 rounded-lg p-2.5 outline-primary text-gray-700 bg-white focus:ring-2 focus:ring-primary/20 transition-all" />
               ) : (
                   <p className="text-gray-800 font-medium py-2.5">{formData.aadharNumber || '-'}</p>
               )}
@@ -180,7 +196,7 @@ const UserProfile = () => {
             <div className="flex flex-col">
               <label className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-2">Licence Number</label>
               {isEditing ? (
-                  <input type="text" name="licenceNumber" value={formData.licenceNumber} onChange={handleChange} placeholder="DL-00-0000-0000000" className="border border-gray-300 rounded-lg p-2.5 outline-primary text-gray-700 bg-white focus:ring-2 focus:ring-primary/20 transition-all uppercase" />
+                  <input type="text" name="licenceNumber" value={formData.licenceNumber} onChange={handleChange} required placeholder="DL-00-0000-0000000" className="border border-gray-300 rounded-lg p-2.5 outline-primary text-gray-700 bg-white focus:ring-2 focus:ring-primary/20 transition-all uppercase" />
               ) : (
                   <p className="text-gray-800 font-medium py-2.5 uppercase">{formData.licenceNumber || '-'}</p>
               )}
@@ -190,7 +206,7 @@ const UserProfile = () => {
           <div className="flex flex-col border-t border-gray-100 pt-6">
             <label className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-2">Full Address</label>
             {isEditing ? (
-                <textarea name="address" value={formData.address} onChange={handleChange} rows="3" placeholder="123 Main Street, City, State, ZIP..." className="border border-gray-300 rounded-lg p-3 outline-primary text-gray-700 bg-white resize-none focus:ring-2 focus:ring-primary/20 transition-all" />
+                <textarea name="address" value={formData.address} onChange={handleChange} rows="3" required placeholder="123 Main Street, City, State, ZIP..." className="border border-gray-300 rounded-lg p-3 outline-primary text-gray-700 bg-white resize-none focus:ring-2 focus:ring-primary/20 transition-all" />
             ) : (
                 <p className="text-gray-800 font-medium py-2.5 whitespace-pre-wrap">{formData.address || '-'}</p>
             )}
@@ -211,7 +227,8 @@ const UserProfile = () => {
                             aadharNumber: user?.aadharNumber || '',
                             panNumber: user?.panNumber || '',
                             licenceNumber: user?.licenceNumber || '',
-                            address: user?.address || ''
+                            address: user?.address || '',
+                            gender: user?.gender || ''
                         })
                     }} className="px-6 py-2.5 bg-gray-100 text-gray-600 rounded-lg font-medium hover:bg-gray-200 transition-all cursor-pointer">
                     Cancel

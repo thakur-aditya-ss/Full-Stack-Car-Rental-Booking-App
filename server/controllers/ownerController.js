@@ -17,6 +17,43 @@ export const changeRoleToOwner = async (req, res)=>{
     }
 }
 
+// API to Get All Users Details for Admin
+export const getAllUsersDetails = async (req, res) => {
+    try {
+        const { _id, role } = req.user;
+        if(role !== 'owner'){
+            return res.json({ success: false, message: "Unauthorized" });
+        }
+        
+        // Find all bookings for this owner
+        const bookings = await Booking.find({ owner: _id });
+        const userIds = [...new Set(bookings.map(b => b.user.toString()))];
+        
+        const users = await User.find({ _id: { $in: userIds }, role: 'user' }).select('-password');
+        res.json({ success: true, users });
+    } catch (error) {
+        console.log(error.message);
+        res.json({ success: false, message: error.message });
+    }
+}
+
+// API to get a specific user's bookings for Admin
+export const getUserBookingsForAdmin = async (req, res) => {
+    try {
+        const { _id, role } = req.user;
+        if(role !== 'owner'){
+            return res.json({ success: false, message: "Unauthorized" });
+        }
+        const { userId } = req.params;
+        const bookings = await Booking.find({ user: userId, owner: _id }).populate('car').sort({ createdAt: -1 });
+        const user = await User.findById(userId).select('name email');
+        res.json({ success: true, bookings, user });
+    } catch (error) {
+        console.log(error.message);
+        res.json({ success: false, message: error.message });
+    }
+}
+
 // API to List Car
 
 export const addCar = async (req, res)=>{
@@ -210,10 +247,10 @@ export const updateUserImage = async (req, res)=>{
 export const updateOwnerProfile = async (req, res) => {
     try {
         const { _id } = req.user;
-        const { name, dob, aadharNumber, panNumber, licenceNumber, address } = req.body;
+        const { name, dob, aadharNumber, panNumber, licenceNumber, address, gender } = req.body;
 
         await User.findByIdAndUpdate(_id, {
-            name, dob, aadharNumber, panNumber, licenceNumber, address
+            name, dob, aadharNumber, panNumber, licenceNumber, address, gender
         });
 
         res.json({ success: true, message: "Profile Updated" });

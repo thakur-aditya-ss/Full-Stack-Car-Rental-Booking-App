@@ -84,10 +84,10 @@ export const getCars = async (req, res) =>{
 export const updateUserProfile = async (req, res) => {
     try {
         const { _id } = req.user;
-        const { name, dob, age, mobileNumber, aadharNumber, panNumber, licenceNumber, address } = req.body;
+        const { name, dob, age, mobileNumber, aadharNumber, panNumber, licenceNumber, address, gender } = req.body;
 
         await User.findByIdAndUpdate(_id, {
-            name, dob, age, mobileNumber, aadharNumber, panNumber, licenceNumber, address
+            name, dob, age, mobileNumber, aadharNumber, panNumber, licenceNumber, address, gender
         });
 
         res.json({ success: true, message: "Profile Updated" });

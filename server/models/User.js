@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
     image: {type: String, default: ''},
     dob: {type: String, default: ''},
     age: {type: Number, default: null},
+    gender: {type: String, default: ''},
     mobileNumber: {type: String, default: ''},
     aadharNumber: {type: String, default: ''},
     panNumber: {type: String, default: ''},

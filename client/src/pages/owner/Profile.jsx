@@ -13,7 +13,8 @@ const Profile = () => {
     aadharNumber: '',
     panNumber: '',
     licenceNumber: '',
-    address: ''
+    address: '',
+    gender: ''
   })
 
   const [image, setImage] = useState(null)
@@ -27,7 +28,8 @@ const Profile = () => {
         aadharNumber: user.aadharNumber || '',
         panNumber: user.panNumber || '',
         licenceNumber: user.licenceNumber || '',
-        address: user.address || ''
+        address: user.address || '',
+        gender: user.gender || ''
       })
     }
   }, [user])
@@ -140,10 +142,31 @@ const Profile = () => {
                     name="dob"
                     value={formData.dob}
                     onChange={handleChange}
+                    required
                     className="border border-gray-300 rounded-lg p-2.5 outline-primary text-gray-700 bg-white focus:ring-2 focus:ring-primary/20 transition-all"
                   />
               ) : (
                   <p className="text-gray-800 font-medium py-2.5">{formData.dob || '-'}</p>
+              )}
+            </div>
+
+            <div className="flex flex-col">
+              <label className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-2">Gender</label>
+              {isEditing ? (
+                  <select
+                    name="gender"
+                    value={formData.gender}
+                    onChange={handleChange}
+                    required
+                    className="border border-gray-300 rounded-lg p-2.5 outline-primary text-gray-700 bg-white focus:ring-2 focus:ring-primary/20 transition-all"
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+              ) : (
+                  <p className="text-gray-800 font-medium py-2.5">{formData.gender || '-'}</p>
               )}
             </div>
 
@@ -156,6 +179,7 @@ const Profile = () => {
                     value={formData.aadharNumber}
                     onChange={handleChange}
                     placeholder="0000 0000 0000"
+                    required
                     className="border border-gray-300 rounded-lg p-2.5 outline-primary text-gray-700 bg-white focus:ring-2 focus:ring-primary/20 transition-all"
                   />
               ) : (
@@ -188,6 +212,7 @@ const Profile = () => {
                     value={formData.licenceNumber}
                     onChange={handleChange}
                     placeholder="DL-00-0000-0000000"
+                    required
                     className="border border-gray-300 rounded-lg p-2.5 outline-primary text-gray-700 bg-white focus:ring-2 focus:ring-primary/20 transition-all uppercase"
                   />
               ) : (
@@ -205,6 +230,7 @@ const Profile = () => {
                   onChange={handleChange}
                   rows="3"
                   placeholder="123 Main Street, City, State, ZIP..."
+                  required
                   className="border border-gray-300 rounded-lg p-3 outline-primary text-gray-700 bg-white resize-none focus:ring-2 focus:ring-primary/20 transition-all"
                 />
             ) : (
@@ -230,7 +256,8 @@ const Profile = () => {
                             aadharNumber: user?.aadharNumber || '',
                             panNumber: user?.panNumber || '',
                             licenceNumber: user?.licenceNumber || '',
-                            address: user?.address || ''
+                            address: user?.address || '',
+                            gender: user?.gender || ''
                         })
                     }}
                     className="px-6 py-2.5 bg-gray-100 text-gray-600 rounded-lg font-medium hover:bg-gray-200 transition-all cursor-pointer"

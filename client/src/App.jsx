@@ -5,12 +5,15 @@ import Home from './pages/Home'
 import CarDetails from './pages/CarDetails'
 import Cars from './pages/Cars'
 import MyBookings from './pages/MyBookings'
+import YourCars from './pages/YourCars'
 import Footer from './components/Footer'
 import Layout from './pages/owner/Layout'
 import Dashboard from './pages/owner/Dashboard'
 import AddCar from './pages/owner/AddCar'
 import ManageCars from './pages/owner/ManageCars'
 import ManageBookings from './pages/owner/ManageBookings'
+import UserDetails from './pages/owner/UserDetails'
+import UserBookings from './pages/owner/UserBookings'
 import Profile from './pages/owner/Profile'
 import Login from './components/Login'
 import { Toaster } from 'react-hot-toast'
@@ -35,12 +38,15 @@ const App = () => {
       <Route path='/car-details/:id' element={<CarDetails/>}/>
       <Route path='/cars' element={<Cars/>}/>
       <Route path='/my-bookings' element={<MyBookings/>}/>
+      <Route path='/your-cars' element={<YourCars/>}/>
       <Route path='/profile' element={<UserProfile/>}/>
       <Route path='/owner' element={<Layout />}>
         <Route index element={<Dashboard />}/>
         <Route path="add-car" element={<AddCar />}/>
         <Route path="manage-cars" element={<ManageCars />}/>
         <Route path="manage-bookings" element={<ManageBookings />}/>
+        <Route path="user-details" element={<UserDetails />}/>
+        <Route path="user-bookings/:userId" element={<UserBookings />}/>
         <Route path="profile" element={<Profile />}/>
       </Route>
     </Routes>

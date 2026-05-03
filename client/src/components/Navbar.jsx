@@ -18,15 +18,15 @@ const Navbar = () => {
     initial={{y: -20, opacity: 0}}
     animate={{y: 0, opacity: 1}}
     transition={{duration: 0.5}}
-    className={`flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 text-gray-700 font-medium border-b border-borderColor/50 sticky top-0 z-50 transition-all ${location.pathname === "/" ? "bg-white/80 backdrop-blur-md shadow-sm" : "bg-white/90 backdrop-blur-md shadow-sm"}`}>
+    className={`flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 text-gray-700 font-medium border-b border-borderColor/50 sticky top-0 z-50 transition-all bg-transparent backdrop-blur-sm`}>
 
         <Link to='/'>
             <motion.img whileHover={{scale: 1.05}} src={assets.logo} alt="logo" className="h-8"/>
         </Link>
 
-        <div className={`max-sm:fixed max-sm:h-screen max-sm:w-full max-sm:top-16 max-sm:border-t border-borderColor/50 right-0 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8 max-sm:p-6 transition-all duration-300 z-50 ${location.pathname === "/" ? "bg-white/95 backdrop-blur-xl" : "bg-white/95 backdrop-blur-xl"} ${open ? "max-sm:translate-x-0" : "max-sm:translate-x-full"}`}>
+        <div className={`max-sm:fixed max-sm:h-screen max-sm:w-full max-sm:top-16 max-sm:border-t border-borderColor/50 right-0 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8 max-sm:p-6 transition-all duration-300 z-50 bg-transparent backdrop-blur-xl ${open ? "max-sm:translate-x-0" : "max-sm:translate-x-full"}`}>
             {menuLinks.map((link, index)=> (
-                <Link key={index} to={link.path} className="hover:text-primary transition-colors">
+                <Link onClick={()=> setOpen(false)} key={index} to={link.path} className="hover:text-primary transition-colors">
                     {link.name}
                 </Link>
             ))}
@@ -38,13 +38,15 @@ const Navbar = () => {
 
             <div className='flex max-sm:flex-col items-start sm:items-center gap-6 mt-4 sm:mt-0'>
 
-                <button onClick={()=> isOwner ? navigate('/owner') : navigate('/my-bookings')} className="cursor-pointer hover:text-primary transition-colors font-semibold">{isOwner ? 'Dashboard' : 'My Rentals'}</button>
+                <button onClick={()=> { setOpen(false); isOwner ? navigate('/owner') : navigate('/your-cars'); }} className="cursor-pointer hover:text-primary transition-colors font-semibold">{isOwner ? 'Dashboard' : 'Your Car'}</button>
 
                 {user && !isOwner && (
-                    <button onClick={()=> navigate('/profile')} className="cursor-pointer hover:text-primary transition-colors font-semibold">Profile</button>
+                    <div onClick={() => { setOpen(false); navigate('/profile'); }} className="cursor-pointer h-10 w-10 rounded-full border border-gray-300 overflow-hidden hover:shadow-md transition-all">
+                        <img src={user.image || assets.user_profile} alt="Profile" className="h-full w-full object-cover" onError={(e) => { e.target.src = assets.user_profile; }} />
+                    </div>
                 )}
 
-                <button onClick={()=> {user ? logout() : setShowLogin(true)}} className="cursor-pointer px-8 py-2.5 bg-primary hover:bg-primary-dull transition-all text-white font-semibold rounded-xl shadow-md hover:shadow-lg">{user ? 'Logout' : 'Login'}</button>
+                <button onClick={()=> { setOpen(false); user ? logout() : setShowLogin(true); }} className="cursor-pointer px-8 py-2.5 bg-primary hover:bg-primary-dull transition-all text-white font-semibold rounded-xl shadow-md hover:shadow-lg">{user ? 'Logout' : 'Login'}</button>
             </div>
         </div>
 
