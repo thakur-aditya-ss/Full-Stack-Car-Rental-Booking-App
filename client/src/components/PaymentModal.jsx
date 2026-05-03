@@ -50,6 +50,8 @@ const PaymentModal = ({ booking, onClose, onSuccess }) => {
               <div>
                 <p className='text-sm opacity-80'>Car</p>
                 <p className='font-medium text-lg'>{booking.car.brand} {booking.car.model}</p>
+
+                {/* Added */}
               </div>
               <div>
                 <p className='text-sm opacity-80'>Booking ID</p>
