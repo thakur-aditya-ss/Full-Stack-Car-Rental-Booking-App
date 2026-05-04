@@ -1,7 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from 'motion/react';
+import { toast } from 'react-hot-toast';
 
 const Newsletter = () => {
+  const [email, setEmail] = useState('');
+
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+    if (email) {
+      toast.success('Thank you for subscribing! We will send you our latest offers and exclusive discounts.');
+      setEmail('');
+    }
+  };
+
   return (
     <motion.div
     initial={{ opacity: 0, y: 30 }}
@@ -27,14 +38,17 @@ const Newsletter = () => {
                 Subscribe to get the latest offers, new arrivals, and exclusive discounts
             </motion.p>
             <motion.form 
+                onSubmit={handleSubscribe}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.5 }}
 
             className="flex items-center justify-between max-w-2xl w-full md:h-13 h-12">
                 <input
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="border border-gray-300 rounded-md h-full border-r-0 outline-none w-full rounded-r-none px-3 text-gray-500"
-                    type="text"
+                    type="email"
                     placeholder="Enter your email id"
                     required
                 />
