@@ -6,19 +6,19 @@ import { motion } from 'motion/react';
 const Testimonial = () => {
 
     const testimonials = [
-        { name: "Aditya Thakur", 
+        { name: "Rohan Thakur", 
           location: "Lucknow, Uttar Pradesh", 
-          image: assets.testimonial_image_1, 
+          image: assets.Review, 
           testimonial: "I've rented cars from various companies, but the experience with CarRental was exceptional. The booking process was so smooth!" 
         },
         { name: "Sandeep Kumar", 
           location: "Varanasi, Uttar Pradesh", 
-          image: assets.testimonial_image_2, 
+          image: assets.Review, 
           testimonial: "CarRental made my trip so much easier. The car was delivered right on time, and the customer service was fantastic!" 
         },
-        { name: "Priya Sharma", 
+        { name: "Priyaanshu Sharma", 
           location: "Kanpur, Uttar Pradesh", 
-          image: assets.testimonial_image_1, 
+          image: assets.Review, 
           testimonial: "I highly recommend CarRental! Their fleet is amazing, and I always feel like I'm getting the best deal with excellent service." 
         }
     ];
