@@ -30,8 +30,8 @@ const faqs = [
   {
     category: '🏠 For Car Owners',
     items: [
-      { q: 'How do I list my car?', a: 'Sign up as an Admin/Owner, go to your Dashboard, and click "Add Car". Fill in the car details including brand, model, price, location, and upload images.' },
-      { q: 'How do I manage bookings?', a: 'From your owner dashboard, go to "Manage Bookings" to view, confirm, or manage all bookings for your listed vehicles.' },
+      { q: 'How do I list my car?', a: 'Sign up as an Admin/Owner, go to your Owner Panel, and click "Add Car". Fill in the car details including brand, model, price, location, and upload images.' },
+      { q: 'How do I manage bookings?', a: 'From your owner panel, go to "Manage Bookings" to view, confirm, or manage all bookings for your listed vehicles.' },
       { q: 'Can I set my own rental price?', a: 'Yes, you have full control over the daily rental price of your vehicle when listing it on the platform.' },
     ]
   },
