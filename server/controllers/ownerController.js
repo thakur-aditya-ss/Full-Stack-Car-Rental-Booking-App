@@ -25,11 +25,10 @@ export const getAllUsersDetails = async (req, res) => {
             return res.json({ success: false, message: "Unauthorized" });
         }
         
-        // Find all bookings for this owner
-        const bookings = await Booking.find({ owner: _id });
-        const userIds = [...new Set(bookings.map(b => b.user.toString()))];
+        // Find all unique users who have booked at least one car from this owner
+        const userIds = await Booking.find({ owner: _id }).distinct('user');
         
-        const users = await User.find({ _id: { $in: userIds }, role: 'user' }).select('-password');
+        const users = await User.find({ _id: { $in: userIds } }).select('-password');
         res.json({ success: true, users });
     } catch (error) {
         console.log(error.message);
