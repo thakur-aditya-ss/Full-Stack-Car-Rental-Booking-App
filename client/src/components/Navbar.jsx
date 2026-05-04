@@ -70,11 +70,11 @@ const Navbar = () => {
           <button
             onClick={() => {
               setOpen(false);
-              isOwner ? navigate("/owner") : navigate("/your-cars");
+              navigate("/your-cars");
             }}
             className="cursor-pointer hover:text-primary transition-colors font-semibold"
           >
-            {isOwner ? "Dashboard" : "My Cars"}
+            My Cars
           </button>
         )}
 

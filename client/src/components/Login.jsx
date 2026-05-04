@@ -1,6 +1,7 @@
 import React from 'react'
 import { useAppContext } from '../context/AppContext';
 import toast from 'react-hot-toast';
+import { assets } from '../assets/assets';
 
 const Login = () => {
 
@@ -11,6 +12,7 @@ const Login = () => {
     const [name, setName] = React.useState("");
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
+    const [showPassword, setShowPassword] = React.useState(false);
 
     const onSubmitHandler = async (event)=>{
         try {
@@ -88,7 +90,10 @@ const Login = () => {
             </div>
             <div className="w-full ">
                 <p>{state === 'forgot' ? 'New Password' : 'Password'}</p>
-                <input onChange={(e) => setPassword(e.target.value)} value={password} placeholder="type here" className="border border-gray-200 rounded w-full p-2 mt-1 outline-primary" type="password" required />
+                <div className='relative w-full'>
+                    <input onChange={(e) => setPassword(e.target.value)} value={password} placeholder="type here" className="border border-gray-200 rounded w-full p-2 mt-1 outline-primary" type={showPassword ? "text" : "password"} required />
+                    <img onClick={() => setShowPassword(!showPassword)} src={showPassword ? assets.eye_icon : assets.eye_close_icon} alt="Toggle Password" width={18} className='absolute top-1/2 -translate-y-1/2 right-3 cursor-pointer opacity-50 hover:opacity-100 transition-all' />
+                </div>
             </div>
             
             {state === "login" && (
