@@ -3,6 +3,7 @@ import { assets, menuLinks } from "../assets/assets";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import { motion } from "motion/react";
+import Logo from "./Logo";
 
 const Navbar = () => {
   const { setShowLogin, user, logout, isOwner } = useAppContext();
@@ -32,12 +33,7 @@ const Navbar = () => {
     >
       {/* Left - Logo */}
       <Link to="/">
-        <motion.img
-          whileHover={{ scale: 1.05 }}
-          src={assets.logo}
-          alt="logo"
-          className="h-8"
-        />
+        <Logo />
       </Link>
 
       {/* Center - Navigation */}

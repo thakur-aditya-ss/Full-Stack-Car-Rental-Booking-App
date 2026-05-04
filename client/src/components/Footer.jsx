@@ -3,6 +3,7 @@ import { assets } from '../assets/assets'
 import { motion } from 'motion/react';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
+import Logo from './Logo';
 
 const Footer = () => {
   const navigate = useNavigate()
@@ -55,11 +56,7 @@ const Footer = () => {
                 
                 {/* Logo & Description */}
                 <div className='w-full md:w-auto md:max-w-xs'>
-                    <motion.img 
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        transition={{ duration: 0.5, delay: 0.3 }}
-                    src={assets.logo} alt="logo" className='h-8 md:h-9' />
+                    <Logo />
 
                     <motion.p 
                         initial={{ opacity: 0 }}
