@@ -18,8 +18,13 @@ import Profile from './pages/owner/Profile'
 import Login from './components/Login'
 import { Toaster } from 'react-hot-toast'
 import { useAppContext } from './context/AppContext'
-
 import UserProfile from './pages/UserProfile'
+import AboutUs from './pages/AboutUs'
+import HelpCenter from './pages/HelpCenter'
+import TermsOfService from './pages/TermsOfService'
+import PrivacyPolicy from './pages/PrivacyPolicy'
+import Insurance from './pages/Insurance'
+import CookiePolicy from './pages/CookiePolicy'
 
 const App = () => {
 
@@ -40,6 +45,12 @@ const App = () => {
       <Route path='/my-bookings' element={<MyBookings/>}/>
       <Route path='/your-cars' element={<YourCars/>}/>
       <Route path='/profile' element={<UserProfile/>}/>
+      <Route path='/about-us' element={<AboutUs/>}/>
+      <Route path='/help-center' element={<HelpCenter/>}/>
+      <Route path='/terms-of-service' element={<TermsOfService/>}/>
+      <Route path='/privacy-policy' element={<PrivacyPolicy/>}/>
+      <Route path='/insurance' element={<Insurance/>}/>
+      <Route path='/cookie-policy' element={<CookiePolicy/>}/>
       <Route path='/owner' element={<Layout />}>
         <Route index element={<Dashboard />}/>
         <Route path="add-car" element={<AddCar />}/>
@@ -58,3 +69,4 @@ const App = () => {
 }
 
 export default App
+

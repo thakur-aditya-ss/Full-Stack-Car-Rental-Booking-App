@@ -1,8 +1,20 @@
 import React from 'react'
 import { assets } from '../assets/assets'
 import { motion } from 'motion/react'
+import { useAppContext } from '../context/AppContext'
 
 const Banner = () => {
+  const { user, isOwner, navigate, setShowLogin, setDefaultLoginRole } = useAppContext()
+
+  const handleListCar = () => {
+    if (user && isOwner) {
+      navigate('/owner')
+    } else {
+      setDefaultLoginRole('owner')
+      setShowLogin(true)
+    }
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -18,6 +30,7 @@ const Banner = () => {
         <p className='max-w-130 text-white/80 mt-1 leading-relaxed'>We take care of insurance and driver verification — so you can earn passive income, stress-free.</p>
 
         <motion.button
+          onClick={handleListCar}
           whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.2)" }}
           whileTap={{ scale: 0.95 }}
           className='px-8 py-3 bg-white hover:bg-slate-50 transition-all text-primary font-semibold rounded-xl text-sm mt-6 cursor-pointer shadow-lg'>List your car</motion.button>
