@@ -50,7 +50,7 @@ const Navbar = () => {
 
             <div className='flex max-sm:flex-col items-start sm:items-center gap-6 mt-4 sm:mt-0'>
 
-                <button onClick={()=> { setOpen(false); isOwner ? navigate('/owner') : navigate('/your-cars'); }} className="cursor-pointer hover:text-primary transition-colors font-semibold">{isOwner ? 'Dashboard' : 'Your Car'}</button>
+                {user && <button onClick={()=> { setOpen(false); isOwner ? navigate('/owner') : navigate('/your-cars'); }} className="cursor-pointer hover:text-primary transition-colors font-semibold">{isOwner ? 'Dashboard' : 'Your Car'}</button>}
 
                 {user && !isOwner && (
                     <div onClick={() => { setOpen(false); navigate('/profile'); }} className="cursor-pointer h-10 w-10 rounded-full border border-gray-300 overflow-hidden hover:shadow-md transition-all">

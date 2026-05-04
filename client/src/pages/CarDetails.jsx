@@ -10,15 +10,19 @@ const CarDetails = () => {
 
   const {id} = useParams()
 
-  const {cars, axios, pickupDate, setPickupDate, returnDate, setReturnDate, user} = useAppContext()
+  const {cars, axios, pickupDate, setPickupDate, returnDate, setReturnDate, user, setShowLogin} = useAppContext()
 
   const navigate = useNavigate()
   const [car, setCar] = useState(null)
   const [pickupAddress, setPickupAddress] = useState('')
-  const currency = import.meta.env.VITE_CURRENCY
+  const currency = import.meta.env.VITE_CURRENCY || '₹'
 
   const handleSubmit = async (e)=>{
     e.preventDefault();
+    if (!user) {
+      setShowLogin(true)
+      return;
+    }
     try {
       const isProfileComplete = user?.dob && user?.age && user?.mobileNumber && user?.aadharNumber && user?.panNumber && user?.licenceNumber && user?.address;
 
