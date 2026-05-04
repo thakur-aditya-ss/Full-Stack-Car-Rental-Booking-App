@@ -38,7 +38,7 @@ const Navbar = () => {
 
         <div className={`max-sm:fixed max-sm:h-screen max-sm:w-full ${scrolled ? 'max-sm:top-[56px]' : 'max-sm:top-[72px]'} max-sm:border-t border-gray-200/50 right-0 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8 max-sm:p-6 transition-all duration-300 z-50 max-sm:bg-white/95 max-sm:backdrop-blur-xl sm:bg-transparent ${open ? "max-sm:translate-x-0" : "max-sm:translate-x-full"}`}>
             {menuLinks.map((link, index)=> (
-                <Link onClick={()=> setOpen(false)} key={index} to={link.path} className="hover:text-primary transition-colors">
+                <Link onClick={(e)=> { setOpen(false); if (link.path !== '/' && !user) { e.preventDefault(); setShowLogin(true); } }} key={index} to={link.path} className="hover:text-primary transition-colors">
                     {link.name}
                 </Link>
             ))}
