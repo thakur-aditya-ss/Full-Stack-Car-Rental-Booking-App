@@ -41,6 +41,22 @@ const MyBookings = () => {
     }
   }
 
+  const cancelBooking = async (bookingId) => {
+    if (window.confirm("Are you sure you want to cancel this booking? If you cancel, you will not receive a refund.")) {
+      try {
+        const { data } = await axios.post('/api/bookings/cancel-booking', { bookingId })
+        if (data.success) {
+          toast.success(data.message)
+          fetchMyBookings()
+        } else {
+          toast.error(data.message)
+        }
+      } catch (error) {
+        toast.error(error.message)
+      }
+    }
+  }
+
   useEffect(()=>{
     user && fetchMyBookings()
   },[user])
@@ -114,6 +130,11 @@ const MyBookings = () => {
                    <button onClick={() => setSelectedBookingForPayment(booking)} className='mt-4 px-6 py-2 bg-green-500 hover:bg-green-600 text-white font-medium rounded transition-all cursor-pointer shadow-sm'>
                      Pay Now
                    </button>
+                )}
+                {booking.status !== 'cancelled' && (
+                  <button onClick={() => cancelBooking(booking._id)} className='mt-2 px-6 py-2 bg-red-50 hover:bg-red-100 text-red-500 font-medium rounded transition-all cursor-pointer border border-red-100'>
+                    Cancel Booking
+                  </button>
                 )}
               </div>
            </div>
