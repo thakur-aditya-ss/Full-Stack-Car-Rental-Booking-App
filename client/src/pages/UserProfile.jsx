@@ -10,7 +10,6 @@ const UserProfile = () => {
   const [isEditing, setIsEditing] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
-    age: '',
     mobileNumber: '',
     dob: '',
     aadharNumber: '',
@@ -27,7 +26,6 @@ const UserProfile = () => {
     if (user) {
       setFormData({
         name: user.name || '',
-        age: user.age || '',
         mobileNumber: user.mobileNumber || '',
         dob: user.dob || '',
         aadharNumber: user.aadharNumber || '',
@@ -157,14 +155,7 @@ const UserProfile = () => {
               )}
             </div>
 
-            <div className="flex flex-col">
-              <label className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-2">Age</label>
-              {isEditing ? (
-                  <input type="number" name="age" value={formData.age} onChange={handleChange} required placeholder="e.g. 25" className="border border-gray-300 rounded-lg p-2.5 outline-primary text-gray-700 bg-white focus:ring-2 focus:ring-primary/20 transition-all" />
-              ) : (
-                  <p className="text-gray-800 font-medium py-2.5">{formData.age || '-'}</p>
-              )}
-            </div>
+
 
             <div className="flex flex-col">
               <label className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-2">Mobile Number</label>
@@ -221,7 +212,6 @@ const UserProfile = () => {
                         setIsEditing(false)
                         setFormData({
                             name: user?.name || '',
-                            age: user?.age || '',
                             mobileNumber: user?.mobileNumber || '',
                             dob: user?.dob || '',
                             aadharNumber: user?.aadharNumber || '',

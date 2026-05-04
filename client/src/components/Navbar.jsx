@@ -40,7 +40,7 @@ const Navbar = () => {
       <div
         className={`max-sm:fixed max-sm:h-screen max-sm:w-full ${scrolled ? "max-sm:top-[56px]" : "max-sm:top-[72px]"} max-sm:border-t border-gray-200/50 right-0 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8 max-sm:p-6 transition-all duration-300 z-50 max-sm:bg-white/95 max-sm:backdrop-blur-xl sm:bg-transparent ${open ? "max-sm:translate-x-0" : "max-sm:translate-x-full"}`}
       >
-        {menuLinks.filter(link => !isOwner || link.name !== "My Bookings").map((link, index) => (
+        {menuLinks.map((link, index) => (
           <Link
             onClick={(e) => {
               setOpen(false);
@@ -74,15 +74,15 @@ const Navbar = () => {
             }}
             className="cursor-pointer hover:text-primary transition-colors font-semibold"
           >
-            My Cars
+            {isOwner ? "Dashboard" : "My Cars"}
           </button>
         )}
 
-        {user && !isOwner && (
+        {user && (
           <div
             onClick={() => {
               setOpen(false);
-              navigate("/profile");
+              navigate(isOwner ? "/owner/profile" : "/profile");
             }}
             className="cursor-pointer h-10 w-10 rounded-full border border-gray-300 overflow-hidden hover:shadow-md transition-all"
           >

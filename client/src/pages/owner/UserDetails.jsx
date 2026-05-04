@@ -3,6 +3,7 @@ import { useAppContext } from '../../context/AppContext'
 import Title from '../../components/owner/Title'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+import { assets } from '../../assets/assets'
 
 const UserDetails = () => {
     const navigate = useNavigate()
@@ -40,7 +41,7 @@ const UserDetails = () => {
                     {users.map((u) => (
                         <div onClick={() => navigate(`/owner/user-bookings/${u._id}`)} key={u._id} className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 flex flex-col gap-4 cursor-pointer hover:shadow-md transition-all">
                             <div className="flex items-center gap-4 border-b border-gray-100 pb-4">
-                                <img src={u.image || '/src/assets/user_profile.png'} alt="User" className="w-16 h-16 rounded-full object-cover border-2 border-primary/20" />
+                                <img src={u.image || assets.user_profile} alt="User" className="w-16 h-16 rounded-full object-cover border-2 border-primary/20" />
                                 <div>
                                     <h3 className="text-lg font-bold text-gray-800">{u.name}</h3>
                                     <p className="text-sm text-gray-500">{u.email}</p>
@@ -53,8 +54,8 @@ const UserDetails = () => {
                                     <span className="font-medium text-gray-700">{u.gender || 'N/A'}</span>
                                 </div>
                                 <div className="flex flex-col">
-                                    <span className="text-xs text-gray-400 uppercase font-semibold">Age / DOB</span>
-                                    <span className="font-medium text-gray-700">{u.age ? `${u.age} yrs` : 'N/A'} {u.dob ? `(${u.dob})` : ''}</span>
+                                    <span className="text-xs text-gray-400 uppercase font-semibold">DOB</span>
+                                    <span className="font-medium text-gray-700">{u.dob || 'N/A'}</span>
                                 </div>
                                 <div className="flex flex-col">
                                     <span className="text-xs text-gray-400 uppercase font-semibold">Mobile</span>
