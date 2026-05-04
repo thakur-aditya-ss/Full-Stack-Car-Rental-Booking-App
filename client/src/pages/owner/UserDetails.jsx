@@ -31,7 +31,7 @@ const UserDetails = () => {
 
     return (
         <div className="p-8 w-full bg-gray-50 flex-1 h-[calc(100vh-80px)] overflow-y-auto">
-            <Title title="User Details" subTitle="View profile details of all registered users" align="left" />
+            <Title title="User Details" subTitle="View profile details of users who have booked your cars" align="left" />
             
             {loading ? (
                 <p className="mt-8 text-gray-500">Loading users...</p>

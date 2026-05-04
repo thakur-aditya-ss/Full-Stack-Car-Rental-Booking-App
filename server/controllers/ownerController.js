@@ -159,12 +159,10 @@ export const deleteCar = async (req, res) =>{
             return res.json({ success: false, message: "Unauthorized" });
         }
 
-        car.owner = null;
-        car.isAvaliable = false;
+        // Delete the car from the database
+        await Car.findByIdAndDelete(carId);
 
-        await car.save()
-
-        res.json({success: true, message: "Car Removed"})
+        res.json({success: true, message: "Car Deleted Successfully"})
     } catch (error) {
         console.log(error.message);
         res.json({success: false, message: error.message})

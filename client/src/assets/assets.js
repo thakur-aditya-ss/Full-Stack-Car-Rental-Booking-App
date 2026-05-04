@@ -41,7 +41,43 @@ import car_image2 from "./car_image2.png"
 import car_image3 from "./car_image3.png"
 import car_image4 from "./car_image4.png"
 
-export const cityList = ['Lucknow', 'Kanpur', 'Agra', 'Varanasi', 'Noida']
+export const stateCityMap = {
+  "Andaman and Nicobar Islands": ["Port Blair"],
+  "Andhra Pradesh": ["Visakhapatnam", "Vijayawada", "Guntur", "Nellore", "Tirupati"],
+  "Arunachal Pradesh": ["Itanagar", "Tawang"],
+  "Assam": ["Guwahati", "Dibrugarh", "Silchar", "Jorhat"],
+  "Bihar": ["Patna", "Gaya", "Bhagalpur", "Muzaffarpur"],
+  "Chandigarh": ["Chandigarh"],
+  "Chhattisgarh": ["Raipur", "Bhilai", "Bilaspur", "Korba"],
+  "Dadra and Nagar Haveli and Daman and Diu": ["Daman", "Diu", "Silvassa"],
+  "Delhi": ["New Delhi"],
+  "Goa": ["Panaji", "Vasco da Gama", "Margao", "Mapusa"],
+  "Gujarat": ["Ahmedabad", "Surat", "Vadodara", "Rajkot", "Bhavnagar"],
+  "Haryana": ["Gurugram", "Faridabad", "Panipat", "Ambala", "Karnal"],
+  "Himachal Pradesh": ["Shimla", "Manali", "Dharamshala", "Mandi"],
+  "Jammu and Kashmir": ["Srinagar", "Jammu", "Anantnag", "Baramulla"],
+  "Jharkhand": ["Ranchi", "Jamshedpur", "Dhanbad", "Bokaro"],
+  "Karnataka": ["Bengaluru", "Mysuru", "Hubballi", "Mangaluru", "Belagavi"],
+  "Kerala": ["Thiruvananthapuram", "Kochi", "Kozhikode", "Thrissur"],
+  "Ladakh": ["Leh", "Kargil"],
+  "Madhya Pradesh": ["Indore", "Bhopal", "Jabalpur", "Gwalior", "Ujjain"],
+  "Maharashtra": ["Mumbai", "Pune", "Nagpur", "Nashik", "Thane", "Aurangabad"],
+  "Manipur": ["Imphal"],
+  "Meghalaya": ["Shillong"],
+  "Mizoram": ["Aizawl"],
+  "Nagaland": ["Kohima", "Dimapur"],
+  "Odisha": ["Bhubaneswar", "Cuttack", "Rourkela", "Puri"],
+  "Puducherry": ["Puducherry"],
+  "Punjab": ["Ludhiana", "Amritsar", "Jalandhar", "Patiala"],
+  "Rajasthan": ["Jaipur", "Jodhpur", "Udaipur", "Kota", "Bikaner"],
+  "Sikkim": ["Gangtok"],
+  "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai", "Tiruchirappalli", "Salem"],
+  "Telangana": ["Hyderabad", "Warangal", "Nizamabad", "Karimnagar"],
+  "Tripura": ["Agartala"],
+  "Uttar Pradesh": ["Lucknow", "Kanpur", "Agra", "Varanasi", "Noida", "Ghaziabad", "Prayagraj", "Meerut", "Aligarh", "Bareilly", "Moradabad", "Saharanpur", "Gorakhpur", "Ayodhya", "Mathura", "Jhansi", "Muzaffarnagar", "Budaun", "Rampur", "Shahjahanpur", "Firozabad", "Mainpuri", "Etawah", "Mirzapur", "Azamgarh", "Jaunpur", "Farrukhabad", "Orai", "Banda", "Lalitpur", "Deoria", "Ghazipur", "Basti"],
+  "Uttarakhand": ["Dehradun", "Haridwar", "Roorkee", "Haldwani"],
+  "West Bengal": ["Kolkata", "Howrah", "Darjeeling", "Siliguri", "Asansol"]
+};
 
 export const assets = {
     logo,

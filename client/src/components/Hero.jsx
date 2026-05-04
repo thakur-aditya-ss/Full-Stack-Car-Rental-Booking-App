@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { assets, cityList } from '../assets/assets'
+import { assets, stateCityMap } from '../assets/assets'
 import { useAppContext } from '../context/AppContext'
 import {motion} from 'motion/react'
 
 const Hero = () => {
 
+    const [pickupState, setPickupState] = useState('')
     const [pickupLocation, setPickupLocation] = useState('')
 
     const {pickupDate, setPickupDate, returnDate, setReturnDate, navigate} = useAppContext()
@@ -44,10 +45,17 @@ const Hero = () => {
 
         <div className='flex flex-col md:flex-row items-start md:items-center gap-6 w-full md:w-auto px-4'>
             <div className='flex flex-col items-start gap-1.5 w-full md:w-auto pb-4 md:pb-0 border-b md:border-b-0 border-gray-100 md:border-r md:pr-6'>
-                <label className='text-xs font-semibold text-gray-400 uppercase tracking-wider'>Location</label>
-                <select required value={pickupLocation} onChange={(e)=>setPickupLocation(e.target.value)} className='w-full outline-none bg-transparent font-medium text-gray-700 focus:ring-0'>
+                <label className='text-xs font-semibold text-gray-400 uppercase tracking-wider'>State</label>
+                <select required value={pickupState} onChange={(e)=>{setPickupState(e.target.value); setPickupLocation('')}} className='w-full outline-none bg-transparent font-medium text-gray-700 focus:ring-0 max-w-[120px]'>
+                    <option value="" disabled hidden>Select State</option>
+                    {Object.keys(stateCityMap).map((state)=> <option key={state} value={state}>{state}</option>)}
+                </select>
+            </div>
+            <div className='flex flex-col items-start gap-1.5 w-full md:w-auto pb-4 md:pb-0 border-b md:border-b-0 border-gray-100 md:border-r md:pr-6'>
+                <label className='text-xs font-semibold text-gray-400 uppercase tracking-wider'>City</label>
+                <select required disabled={!pickupState} value={pickupLocation} onChange={(e)=>setPickupLocation(e.target.value)} className='w-full outline-none bg-transparent font-medium text-gray-700 focus:ring-0 disabled:text-gray-400 max-w-[120px]'>
                     <option value="" disabled hidden>Select City</option>
-                    {cityList.map((city)=> <option key={city} value={city}>{city}</option>)}
+                    {pickupState && stateCityMap[pickupState].map((city)=> <option key={city} value={city}>{city}</option>)}
                 </select>
             </div>
             <div className='flex flex-col items-start gap-1.5 w-full md:w-auto pb-4 md:pb-0 border-b md:border-b-0 border-gray-100 md:border-r md:pr-6'>

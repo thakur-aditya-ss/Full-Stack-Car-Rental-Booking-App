@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import Title from '../../components/owner/Title'
-import { assets, cityList } from '../../assets/assets'
+import { assets, stateCityMap } from '../../assets/assets'
 import { useAppContext } from '../../context/AppContext'
 import toast from 'react-hot-toast'
 
 const AddCar = () => {
 
-  const {axios, currency, user} = useAppContext()
+  const {axios, user} = useAppContext()
 
   const [image, setImage] = useState(null)
   const [rcDocument, setRcDocument] = useState(null)
@@ -22,6 +22,7 @@ const AddCar = () => {
     location: '',
     description: '',
   })
+  const [selectedState, setSelectedState] = useState('')
 
   const [isLoading, setIsLoading] = useState(false)
   const onSubmitHandler = async (e)=>{
@@ -54,6 +55,7 @@ const AddCar = () => {
           description: '',
           numberPlate: '',
         })
+        setSelectedState('')
       }else{
         toast.error(data.message)
       }
@@ -113,7 +115,7 @@ const AddCar = () => {
             <input type="number" placeholder="2025" required className='px-3 py-2 mt-1 border border-borderColor rounded-md outline-none' value={car.year} onChange={e=> setCar({...car, year: e.target.value})}/>
           </div>
           <div className='flex flex-col w-full'>
-            <label>Daily Price ({currency})</label>
+            <label>Daily Price (₹)</label>
             <input type="number" placeholder="100" required className='px-3 py-2 mt-1 border border-borderColor rounded-md outline-none' value={car.pricePerDay} onChange={e=> setCar({...car, pricePerDay: e.target.value})}/>
           </div>
           <div className='flex flex-col w-full'>
@@ -174,14 +176,25 @@ const AddCar = () => {
         </div>
 
          {/* Car Location */}
-         <div className='flex flex-col w-full'>
-            <label>Location</label>
-            <select onChange={e=> setCar({...car, location: e.target.value})} value={car.location} className='px-3 py-2 mt-1 border border-borderColor rounded-md outline-none'>
-              <option value="">Select a location</option>
-              {cityList.map((city, index) => (
-                <option key={index} value={city}>{city}</option>
-              ))}
-            </select>
+         <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+           <div className='flex flex-col w-full'>
+              <label>State</label>
+              <select required onChange={e=> {setSelectedState(e.target.value); setCar({...car, location: ''})}} value={selectedState} className='px-3 py-2 mt-1 border border-borderColor rounded-md outline-none'>
+                <option value="">Select a state</option>
+                {Object.keys(stateCityMap).map((state, index) => (
+                  <option key={index} value={state}>{state}</option>
+                ))}
+              </select>
+           </div>
+           <div className='flex flex-col w-full'>
+              <label>City (Location)</label>
+              <select required disabled={!selectedState} onChange={e=> setCar({...car, location: e.target.value})} value={car.location} className='px-3 py-2 mt-1 border border-borderColor rounded-md outline-none disabled:bg-gray-100 disabled:text-gray-400'>
+                <option value="">Select a city</option>
+                {selectedState && stateCityMap[selectedState].map((city, index) => (
+                  <option key={index} value={city}>{city}</option>
+                ))}
+              </select>
+           </div>
          </div>
         {/* Car Description */}
          <div className='flex flex-col w-full'>

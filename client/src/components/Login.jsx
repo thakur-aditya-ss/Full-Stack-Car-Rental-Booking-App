@@ -56,7 +56,7 @@ const Login = () => {
   return (
     <div onClick={()=> setShowLogin(false)} className='fixed top-0 bottom-0 left-0 right-0 z-[100] flex items-center justify-center text-sm text-gray-600 bg-black/50 p-4'>
 
-      <form onSubmit={onSubmitHandler} onClick={(e)=>e.stopPropagation()} className="flex flex-col gap-4 w-full max-w-sm p-6 sm:p-8 py-10 sm:py-12 rounded-lg shadow-xl border border-gray-200 bg-white">
+      <form onSubmit={onSubmitHandler} onClick={(e)=>e.stopPropagation()} className="flex flex-col gap-4 w-full max-w-sm p-6 sm:p-8 py-10 sm:py-12 rounded-lg shadow-xl border border-gray-200 bg-white max-h-[90vh] overflow-y-auto">
             
             {state !== 'forgot' && (
                 <div className='flex w-full justify-between border border-gray-200 rounded-md overflow-hidden mb-2'>
