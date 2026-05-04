@@ -30,6 +30,7 @@ const Navbar = () => {
       transition={{ duration: 0.5 }}
       className={`flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 text-gray-700 font-medium sticky top-0 z-50 transition-all duration-300 ${scrolled ? "bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-200/50 py-3" : "bg-transparent border-b border-transparent py-5"}`}
     >
+      {/* Left - Logo */}
       <Link to="/">
         <motion.img
           whileHover={{ scale: 1.05 }}
@@ -39,6 +40,7 @@ const Navbar = () => {
         />
       </Link>
 
+      {/* Center - Navigation */}
       <div
         className={`max-sm:fixed max-sm:h-screen max-sm:w-full ${scrolled ? "max-sm:top-[56px]" : "max-sm:top-[72px]"} max-sm:border-t border-gray-200/50 right-0 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8 max-sm:p-6 transition-all duration-300 z-50 max-sm:bg-white/95 max-sm:backdrop-blur-xl sm:bg-transparent ${open ? "max-sm:translate-x-0" : "max-sm:translate-x-full"}`}
       >
@@ -68,59 +70,71 @@ const Navbar = () => {
           <img src={assets.search_icon} alt="search" className="opacity-50" />
         </div>
 
-        <div className="flex max-sm:flex-col items-start sm:items-center gap-6 mt-4 sm:mt-0">
-          {user && (
-            <button
-              onClick={() => {
-                setOpen(false);
-                isOwner ? navigate("/owner") : navigate("/your-cars");
-              }}
-              className="cursor-pointer hover:text-primary transition-colors font-semibold"
-            >
-              {isOwner ? "Dashboard" : "My Cars"}
-            </button>
-          )}
-
-          {user && !isOwner && (
-            <div
-              onClick={() => {
-                setOpen(false);
-                navigate("/profile");
-              }}
-              className="cursor-pointer h-10 w-10 rounded-full border border-gray-300 overflow-hidden hover:shadow-md transition-all"
-            >
-              <img
-                src={user.image || assets.user_profile}
-                alt="Profile"
-                className="h-full w-full object-cover"
-                onError={(e) => {
-                  e.target.src = assets.user_profile;
-                }}
-              />
-            </div>
-          )}
-
+        {user && (
           <button
             onClick={() => {
               setOpen(false);
-              user ? logout() : setShowLogin(true);
+              isOwner ? navigate("/owner") : navigate("/your-cars");
             }}
-            className="cursor-pointer px-8 py-2.5 bg-primary hover:bg-primary-dull transition-all text-white font-semibold rounded-xl shadow-md hover:shadow-lg"
+            className="cursor-pointer hover:text-primary transition-colors font-semibold"
           >
-            {user ? "Logout" : "Login"}
+            {isOwner ? "Dashboard" : "My Cars"}
           </button>
-        </div>
+        )}
+
+        {user && !isOwner && (
+          <div
+            onClick={() => {
+              setOpen(false);
+              navigate("/profile");
+            }}
+            className="cursor-pointer h-10 w-10 rounded-full border border-gray-300 overflow-hidden hover:shadow-md transition-all"
+          >
+            <img
+              src={user.image || assets.user_profile}
+              alt="Profile"
+              className="h-full w-full object-cover"
+              onError={(e) => {
+                e.target.src = assets.user_profile;
+              }}
+            />
+          </div>
+        )}
+
+        {/* Login/Logout inside mobile menu */}
+        <button
+          onClick={() => {
+            setOpen(false);
+            user ? logout() : setShowLogin(true);
+          }}
+          className="sm:hidden cursor-pointer px-8 py-2.5 bg-primary hover:bg-primary-dull transition-all text-white font-semibold rounded-xl shadow-md hover:shadow-lg mt-4"
+        >
+          {user ? "Logout" : "Login"}
+        </button>
       </div>
 
-      <button
-        className="sm:hidden cursor-pointer p-2 rounded-md hover:bg-gray-100 transition-colors"
-        aria-label="Menu"
-        onClick={() => setOpen(!open)}
-      >
-        <img src={open ? assets.close_icon : assets.menu_icon} alt="menu" />
-      </button>
+      {/* Right - Login/Logout (desktop) + Mobile menu toggle */}
+      <div className="flex items-center gap-4">
+        <button
+          onClick={() => {
+            user ? logout() : setShowLogin(true);
+          }}
+          className="hidden sm:block cursor-pointer px-8 py-2.5 bg-primary hover:bg-primary-dull transition-all text-white font-semibold rounded-xl shadow-md hover:shadow-lg"
+        >
+          {user ? "Logout" : "Login"}
+        </button>
+
+        <button
+          className="sm:hidden cursor-pointer p-2 rounded-md hover:bg-gray-100 transition-colors"
+          aria-label="Menu"
+          onClick={() => setOpen(!open)}
+        >
+          <img src={open ? assets.close_icon : assets.menu_icon} alt="menu" />
+        </button>
+      </div>
     </motion.div>
   );
 };
 
 export default Navbar;
+

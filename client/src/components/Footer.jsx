@@ -14,6 +14,17 @@ const Footer = () => {
       setShowLogin(true)
     } else {
       navigate('/cars')
+      scrollTo(0, 0)
+    }
+  }
+
+  const handleMyCars = (e) => {
+    e.preventDefault()
+    if (!user) {
+      setShowLogin(true)
+    } else {
+      navigate('/your-cars')
+      scrollTo(0, 0)
     }
   }
 
@@ -40,28 +51,27 @@ const Footer = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
             
-            className='flex flex-wrap justify-between items-start gap-8 pb-6 border-borderColor border-b'>
-                <div>
+            className='flex flex-col md:flex-row justify-between items-start gap-10 pb-6 border-borderColor border-b'>
+                
+                {/* Logo & Description */}
+                <div className='w-full md:w-auto md:max-w-xs'>
                     <motion.img 
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
                         transition={{ duration: 0.5, delay: 0.3 }}
-
                     src={assets.logo} alt="logo" className='h-8 md:h-9' />
 
                     <motion.p 
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
                         transition={{ duration: 0.5, delay: 0.4 }}
-
-                    className='max-w-80 mt-3'>
+                    className='mt-3'>
                         Premium car rental service with a wide selection of luxury and everyday vehicles for all your driving needs.
                     </motion.p>
                     <motion.div 
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
                         transition={{ duration: 0.5, delay: 0.5 }}
-                    
                     className='flex items-center gap-3 mt-6'>
                         <a href="#"> <img src={assets.facebook_logo} className='w-5 h-5' alt="" /> </a>
                         <a href="#"> <img src={assets.instagram_logo} className='w-5 h-5' alt="" /> </a>
@@ -70,19 +80,19 @@ const Footer = () => {
                     </motion.div>
                 </div>
 
+                {/* Links Grid */}
                 <motion.div 
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.4 }}
-
-                className='flex flex-wrap justify-between w-1/2 gap-8'>
+                className='w-full md:flex-1 grid grid-cols-2 sm:grid-cols-3 gap-8'>
 
                 <div>
                     <h2 className='text-base font-medium text-gray-800 uppercase'>Quick Links</h2>
                     <ul className='mt-3 flex flex-col gap-1.5'>
-                        <li><a href="/" onClick={(e) => { e.preventDefault(); navigate('/'); }}>Home</a></li>
+                        <li><a href="/" onClick={(e) => { e.preventDefault(); navigate('/'); scrollTo(0,0); }}>Home</a></li>
                         <li><a href="/cars" onClick={handleBrowseCars}>Browse Cars</a></li>
-                        <li><a href="/your-cars" onClick={handleListYourCar}>My Cars</a></li>
+                        <li><a href="/your-cars" onClick={handleMyCars}>My Cars</a></li>
                         <li><a href="/about-us" onClick={(e) => { e.preventDefault(); navigate('/about-us'); scrollTo(0,0); }}>About Us</a></li>
                     </ul>
                 </div>
@@ -97,21 +107,17 @@ const Footer = () => {
                     </ul>
                 </div>
 
-                <div>
+                <div className='col-span-2 sm:col-span-1'>
                     <h2 className='text-base font-medium text-gray-800 uppercase'>Contact</h2>
                     <ul className='mt-3 flex flex-col gap-1.5'>
                         <li>1234 Luxury Drive</li>
                         <li>San Francisco, CA 94107</li>
                         <li>+91 2345678900</li>
-                        <li>carrentalwebapplication2025@gmail.com</li>
+                        <li className='break-all'>carrentalwebapplication2025@gmail.com</li>
                     </ul>
                 </div>
 
                 </motion.div>
-                
-
-                  
-                
 
             </motion.div>
             
@@ -120,8 +126,7 @@ const Footer = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.6 }}
                 
-            className='flex flex-col md:flex-row gap-2 items-center justify-between py-5'>
-                <p>© {new Date().getFullYear()} Brand. All rights reserved.</p>
+            className='flex flex-col gap-2 items-center justify-center py-5'>
                 <ul className='flex items-center gap-4'>
                     <li><a href="/privacy-policy" onClick={(e) => { e.preventDefault(); navigate('/privacy-policy'); scrollTo(0,0); }}>Privacy</a></li>
                     <li>|</li>
@@ -129,10 +134,10 @@ const Footer = () => {
                     <li>|</li>
                     <li><a href="/cookie-policy" onClick={(e) => { e.preventDefault(); navigate('/cookie-policy'); scrollTo(0,0); }}>Cookies</a></li>
                 </ul>
+                <p>© {new Date().getFullYear()} Brand. All rights reserved.</p>
             </motion.div>
         </motion.div>
   )
 }
 
 export default Footer
-
