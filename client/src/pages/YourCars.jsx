@@ -40,7 +40,7 @@ const YourCars = () => {
        align="left"/>
 
        <div>
-        {bookings.map((booking, index)=>(
+        {bookings.filter(b => b.car).map((booking, index)=>(
           <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

@@ -55,7 +55,7 @@ const ManageBookings = () => {
             </tr>
           </thead>
           <tbody>
-            {bookings.map((booking, index)=>(
+            {bookings.filter(b => b.car).map((booking, index)=>(
               <tr key={index} className='border-t border-borderColor text-gray-500'>
 
                 <td className='p-3 flex items-center gap-3'>
@@ -64,7 +64,8 @@ const ManageBookings = () => {
                 </td>
 
                 <td className='p-3 max-md:hidden'>
-                  {booking.pickupDate.split('T')[0]} to {booking.returnDate.split('T')[0]}
+                  <p>{booking.pickupDate.split('T')[0]} to {booking.returnDate.split('T')[0]}</p>
+                  {booking.pickupAddress && <p className='text-xs text-gray-400 mt-1'>📍 {booking.pickupAddress}</p>}
                 </td>
 
                 <td className='p-3'>{currency}{booking.price}</td>

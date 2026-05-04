@@ -41,14 +41,18 @@ export const checkAvailabilityOfCar = async (req, res)=>{
 export const createBooking = async (req, res)=>{
     try {
         const {_id} = req.user;
-        const {car, pickupDate, returnDate} = req.body;
+        const {car, pickupDate, returnDate, pickupAddress} = req.body;
 
         const isAvailable = await checkAvailability(car, pickupDate, returnDate)
         if(!isAvailable){
-            return res.json({success: false, message: "Car is not available"})
+            return res.json({success: false, message: "Car is not available for these dates"})
         }
 
         const carData = await Car.findById(car)
+
+        if(!carData){
+            return res.json({success: false, message: "Car not found"})
+        }
 
         // Calculate price based on pickupDate and returnDate
         const picked = new Date(pickupDate);
@@ -56,7 +60,11 @@ export const createBooking = async (req, res)=>{
         const noOfDays = Math.ceil((returned - picked) / (1000 * 60 * 60 * 24))
         const price = carData.pricePerDay * noOfDays;
 
-        await Booking.create({car, owner: carData.owner, user: _id, pickupDate, returnDate, price})
+        await Booking.create({car, owner: carData.owner, user: _id, pickupDate, returnDate, price, pickupAddress: pickupAddress || ''})
+
+        // Mark the car as unavailable after booking
+        carData.isAvaliable = false;
+        await carData.save();
 
         res.json({success: true, message: "Booking Created"})
 
@@ -86,7 +94,7 @@ export const getOwnerBookings = async (req, res)=>{
         if(req.user.role !== 'owner'){
             return res.json({ success: false, message: "Unauthorized" })
         }
-        const bookings = await Booking.find({owner: req.user._id}).populate('car user').select("-user.password").sort({createdAt: -1 })
+        const bookings = await Booking.find({owner: req.user._id}).populate('car').populate('user', '-password').sort({createdAt: -1 })
         res.json({success: true, bookings})
     } catch (error) {
         console.log(error.message);
@@ -108,6 +116,11 @@ export const changeBookingStatus = async (req, res)=>{
 
         booking.status = status;
         await booking.save();
+
+        // If cancelled, make the car available again
+        if(status === 'cancelled'){
+            await Car.findByIdAndUpdate(booking.car, { isAvaliable: true });
+        }
 
         res.json({ success: true, message: "Status Updated"})
     } catch (error) {

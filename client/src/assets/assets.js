@@ -74,7 +74,7 @@ export const stateCityMap = {
   "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai", "Tiruchirappalli", "Salem"],
   "Telangana": ["Hyderabad", "Warangal", "Nizamabad", "Karimnagar"],
   "Tripura": ["Agartala"],
-  "Uttar Pradesh": ["Lucknow", "Kanpur", "Agra", "Varanasi", "Noida", "Ghaziabad", "Prayagraj", "Meerut", "Aligarh", "Bareilly", "Moradabad", "Saharanpur", "Gorakhpur", "Ayodhya", "Mathura", "Jhansi", "Muzaffarnagar", "Budaun", "Rampur", "Shahjahanpur", "Firozabad", "Mainpuri", "Etawah", "Mirzapur", "Azamgarh", "Jaunpur", "Farrukhabad", "Orai", "Banda", "Lalitpur", "Deoria", "Ghazipur", "Basti"],
+  "Uttar Pradesh": ["Lucknow", "Kanpur", "Agra", "Varanasi", "Noida", "Ghaziabad", "Prayagraj", "Meerut", "Aligarh", "Bareilly", "Moradabad", "Saharanpur", "Gorakhpur", "Ayodhya", "Mathura", "Jhansi", "Muzaffarnagar", "Budaun", "Rampur", "Shahjahanpur", "Firozabad", "Mainpuri", "Etawah", "Mirzapur", "Azamgarh", "Jaunpur", "Farrukhabad", "Orai", "Banda", "Lalitpur", "Deoria", "Ghazipur", "Basti", "Sultanpur"],
   "Uttarakhand": ["Dehradun", "Haridwar", "Roorkee", "Haldwani"],
   "West Bengal": ["Kolkata", "Howrah", "Darjeeling", "Siliguri", "Asansol"]
 };

@@ -14,6 +14,7 @@ const CarDetails = () => {
 
   const navigate = useNavigate()
   const [car, setCar] = useState(null)
+  const [pickupAddress, setPickupAddress] = useState('')
   const currency = import.meta.env.VITE_CURRENCY
 
   const handleSubmit = async (e)=>{
@@ -30,11 +31,13 @@ const CarDetails = () => {
       const {data} = await axios.post('/api/bookings/create', {
         car: id,
         pickupDate, 
-        returnDate
+        returnDate,
+        pickupAddress
       })
 
       if (data.success){
         toast.success(data.message)
+        setPickupAddress('')
         navigate('/my-bookings')
       }else{
         toast.error(data.message)
@@ -151,6 +154,14 @@ const CarDetails = () => {
               <label htmlFor="return-date">Return Date</label>
               <input value={returnDate} onChange={(e)=>setReturnDate(e.target.value)}
               type="date" className='border border-borderColor px-3 py-2 rounded-lg' required id='return-date'/>
+            </div>
+
+            <div className='flex flex-col gap-2'>
+              <label htmlFor="pickup-address">Pick-up Address</label>
+              <textarea value={pickupAddress} onChange={(e)=>setPickupAddress(e.target.value)}
+              placeholder={`Enter your exact pickup address in ${car.location}...`}
+              className='border border-borderColor px-3 py-2 rounded-lg resize-none outline-none focus:border-primary transition-colors' required id='pickup-address' rows={3}/>
+              <p className='text-xs text-gray-400'>📍 Car is located in <span className='font-medium text-gray-500'>{car.location}</span></p>
             </div>
 
             <button className='w-full bg-primary hover:bg-primary-dull transition-all py-3 font-medium text-white rounded-xl cursor-pointer'>Book Now</button>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useAppContext } from '../../context/AppContext'
-import Title from '../../components/Title'
+import Title from '../../components/owner/Title'
 import toast from 'react-hot-toast'
 
 const UserBookings = () => {
@@ -40,13 +40,13 @@ const UserBookings = () => {
                 </button>
             </div>
             
-            <Title title="User Bookings" subTitle={userDetails ? `Bookings made by ${userDetails.name}` : "Loading..."} align="left" />
+            <Title title="User Bookings" subTitle={userDetails ? `Bookings made by ${userDetails.name}` : "Loading..."} />
             
             {loading ? (
                 <p className="mt-8 text-gray-500">Loading bookings...</p>
             ) : (
                 <div className="flex flex-col gap-6 mt-8">
-                    {bookings.map((booking) => (
+                    {bookings.filter(b => b.car).map((booking) => (
                         <div key={booking._id} className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 flex flex-col md:flex-row gap-6 items-center">
                             <img src={booking.car.image} alt={booking.car.brand} className="w-full md:w-48 h-32 object-cover rounded-lg" />
                             <div className="flex flex-col gap-2 flex-1">

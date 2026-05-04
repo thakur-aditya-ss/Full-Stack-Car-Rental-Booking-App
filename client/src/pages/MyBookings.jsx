@@ -58,7 +58,7 @@ const MyBookings = () => {
        align="left"/>
 
        <div>
-        {bookings.map((booking, index)=>(
+        {bookings.filter(b => b.car).map((booking, index)=>(
           <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -94,8 +94,8 @@ const MyBookings = () => {
               <div className='flex items-start gap-2 mt-3'>
                 <img src={assets.location_icon_colored} alt="" className='w-4 h-4 mt-1'/>
                 <div>
-                  <p className='text-gray-500'>Pick-up Location</p>
-                  <p>{booking.car.location}</p>
+                  <p className='text-gray-500'>Pick-up Address</p>
+                  <p>{booking.pickupAddress || booking.car.location}</p>
                 </div>
               </div>
             </div>
