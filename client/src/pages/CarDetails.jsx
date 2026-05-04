@@ -24,7 +24,7 @@ const CarDetails = () => {
       return;
     }
     try {
-      const isProfileComplete = user?.dob && user?.age && user?.mobileNumber && user?.aadharNumber && user?.panNumber && user?.licenceNumber && user?.address;
+      const isProfileComplete = user?.dob && user?.mobileNumber && user?.aadharNumber && user?.panNumber && user?.licenceNumber && user?.address;
 
       if (!isProfileComplete) {
         toast.error("Please complete your profile details before booking.")
